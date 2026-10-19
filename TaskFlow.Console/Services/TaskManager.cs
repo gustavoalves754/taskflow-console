@@ -23,15 +23,19 @@ public sealed class TaskManager
         return _tasks.AsReadOnly();
     }
 
-    public TaskItem FindTaskById(Guid id)
+    public TaskItem? FindTaskById(Guid id)
     {
-        return _tasks.FirstOrDefault(task => task.Id == id)
-            ?? throw new KeyNotFoundException($"Tarefa com ID {id} não encontrada.");
+        return _tasks.FirstOrDefault(task => task.Id == id);
     }
 
     public bool CompleteTask(Guid id)
     {
         var task = FindTaskById(id);
+
+        if (task is null)
+        {
+            return false;
+        }
 
         if (!task.IsCompleted)
         {

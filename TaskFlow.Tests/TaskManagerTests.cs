@@ -28,4 +28,24 @@ public sealed class TaskManagerTests
         Assert.Throws<ArgumentException>(() => manager.AddTask(title));
         Assert.Empty(manager.ListTasks());
     }
+
+    [Fact]
+    public void FindTaskById_WithUnknownId_ReturnsNull()
+    {
+        var manager = new TaskManager();
+
+        var result = manager.FindTaskById(Guid.NewGuid());
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void CompleteTask_WithUnknownId_ReturnsFalse()
+    {
+        var manager = new TaskManager();
+
+        var result = manager.CompleteTask(Guid.NewGuid());
+
+        Assert.False(result);
+    }
 }
